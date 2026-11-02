@@ -82,8 +82,8 @@ def esc(s):
     return s.replace("&", "&amp;").replace("<", "&lt;").replace('"', "&quot;")
 
 
-def svg(h, title, body, style=""):
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {h}" width="{W}" height="{h}" '
+def svg(h, title, body, style="", w=W):
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" width="{w}" height="{h}" '
             f'role="img" aria-labelledby="t"><title id="t">{esc(title)}</title>{style}{body}</svg>\n')
 
 
@@ -94,8 +94,8 @@ def meeple(x, y, scale, fill, cls=""):
     return f'<g transform="translate({x} {y}) scale({scale})">{inner}</g>'
 
 
-def table(h, t):
-    return (f'<rect x="1.5" y="1.5" width="{W - 3}" height="{h - 3}" rx="28" fill="{t["bg"]}" '
+def table(h, t, w=W):
+    return (f'<rect x="1.5" y="1.5" width="{w - 3}" height="{h - 3}" rx="28" fill="{t["bg"]}" '
             f'stroke="{t["edge"]}" stroke-width="3"/>')
 
 
@@ -164,6 +164,33 @@ def card(t, tag, title, desc, meta, accent, legendary=False):
     return svg(h, f"{title}: {desc}", "".join(parts))
 
 
+HALF = 500
+
+
+def half_layout(desc):
+    lines = REG.wrap(desc, 32, HALF - 72)
+    assert len(lines) <= 4, "half card description too long"
+    return lines
+
+
+def half_height(desc):
+    return 168 + len(half_layout(desc)) * 42 + 76
+
+
+def half_card(t, tag, title, desc, meta, accent, h):
+    x, tw = 36, HALF - 72
+    assert BOLD.width(title, 46) < tw and REG.width(meta, 28) < tw
+    col = t[accent]
+    lines = half_layout(desc)
+    parts = [table(h, t, HALF).replace(f'stroke="{t["edge"]}"', f'stroke="{col}"'),
+             meeple(HALF - 104, 30, 0.66, col),
+             BOLD.path(tag, x, 70, 24, t["muted"], track=0.12),
+             BOLD.path(title, x, 132, 46, t["text"]),
+             *[REG.path(line, x, 184 + i * 42, 32, t["text"]) for i, line in enumerate(lines)],
+             REG.path(meta, x, h - 40, 28, t["muted"])]
+    return svg(h, f"{title}: {desc}", "".join(parts), w=HALF)
+
+
 def score(t):
     stops = [("1,500+", "contributions"), ("500+", "stars on|Service Screener"),
              ("130+", "forks of|Service Screener"), ("20+", "public repos")]
@@ -204,6 +231,10 @@ if __name__ == "__main__":
     for mode, t in THEMES.items():
         (ASSETS / f"banner-{mode}.svg").write_text(banner(t))
         (ASSETS / f"score-{mode}.svg").write_text(score(t))
-        for slug, *spec in CARDS:
-            (ASSETS / "cards" / f"{slug}-{mode}.svg").write_text(card(t, *spec))
+        slug, *spec = CARDS[0]
+        (ASSETS / "cards" / f"{slug}-{mode}.svg").write_text(card(t, *spec))
+        for pair in (CARDS[1:3], CARDS[3:5]):
+            h = max(half_height(c[3]) for c in pair)
+            for slug, *spec in pair:
+                (ASSETS / "cards" / f"{slug}-{mode}.svg").write_text(half_card(t, *spec[:5], h))
     print("built", len(list(ASSETS.rglob("*.svg"))), "svg files")

@@ -27,35 +27,37 @@
 
 ## Expansions
 
+<p>
 <a href="https://kuettai.github.io/kirocredit/">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/cards/kirocredit-dark.svg" />
-    <img src="assets/cards/kirocredit-light.svg" width="100%" alt="Expansion card, kirocredit: unofficial guide to redeeming Kiro promo codes and fixing common errors. Opens the live guide." />
+    <img src="assets/cards/kirocredit-light.svg" width="49%" alt="Expansion card, kirocredit: unofficial guide to redeeming Kiro promo codes and fixing common errors. Opens the live guide." />
   </picture>
 </a>
-
 <a href="https://github.com/kuettai/ktws">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/cards/ktws-dark.svg" />
-    <img src="assets/cards/ktws-light.svg" width="100%" alt="Expansion card, ktws: hands-on workshops to build MCP servers and AI agents on AWS. Opens the repository." />
+    <img src="assets/cards/ktws-light.svg" width="49%" alt="Expansion card, ktws: hands-on workshops to build MCP servers and AI agents on AWS. Opens the repository." />
   </picture>
 </a>
+</p>
 
 ## Game night
 
+<p>
 <a href="https://kuettai.github.io/bgrules/">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/cards/bgrules-dark.svg" />
-    <img src="assets/cards/bgrules-light.svg" width="100%" alt="Game night card, bgrules: board game rules for quick lookup at the table, or a refresher before game night. Opens the live tool." />
+    <img src="assets/cards/bgrules-light.svg" width="49%" alt="Game night card, bgrules: board game rules for quick lookup at the table, or a refresher before game night. Opens the live tool." />
   </picture>
 </a>
-
 <a href="https://kuettai.github.io/boardgame-timer/">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/cards/boardgame-timer-dark.svg" />
-    <img src="assets/cards/boardgame-timer-light.svg" width="100%" alt="Game night card, boardgame-timer: installable, offline turn timer that tracks each player's total time or counts down turns and rounds. Opens the live app." />
+    <img src="assets/cards/boardgame-timer-light.svg" width="49%" alt="Game night card, boardgame-timer: installable, offline turn timer that tracks each player's total time or counts down turns and rounds. Opens the live app." />
   </picture>
 </a>
+</p>
 
 ## Side quests
 
